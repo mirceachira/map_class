@@ -8,4 +8,16 @@ public class Repository<ObjectType> {
   public void addEntry(ObjectType newEntry) {
     this.entries.add(newEntry);
   }
+
+  public ArrayList<ObjectType> getAllEntries() {
+    return this.entries;
+  }
+
+  public ObjectType getByIndex(int index) {
+    return this.entries.get(index);
+  }
+
+  public void updateByIndex(int index, String name) {
+//    this.entries.get(index).setName(name);
+  }
 }

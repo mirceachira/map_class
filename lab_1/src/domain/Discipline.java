@@ -15,4 +15,10 @@ public class Discipline {
     return name;
   }
 
+  @Override
+  public String toString() {
+    return "Discipline{" +
+        "name='" + name + '\'' +
+        '}';
+  }
 }
