@@ -17,7 +17,11 @@ public class Repository<ObjectType> {
     return this.entries.get(index);
   }
 
-  public void updateByIndex(int index, String name) {
-//    this.entries.get(index).setName(name);
+  public void setAtIndex(ObjectType newObject, int index) {
+    this.entries.set(index, newObject);
+  }
+
+  public void deleteIndex(int index) {
+    this.entries.remove(index);
   }
 }

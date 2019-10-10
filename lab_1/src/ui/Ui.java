@@ -254,10 +254,38 @@ public class Ui {
     System.out.printf("Updated teacher at %d!", index);
   }
 
+  private void updateActivity() {
+    this.reader.nextLine(); // Read to end of line
+
+    System.out.println("Enter activity index to update: ");
+    int index = this.reader.nextInt();
+
+    this.reader.nextLine(); // Read to end of line
+    System.out.println("Enter new activity name");
+    String name = this.reader.nextLine();
+
+    this.controller.updateActivityByIndex(index, name);
+    System.out.printf("Updated activity at %d!", index);
+  }
+
+  private void updateDiscipline() {
+    this.reader.nextLine(); // Read to end of line
+
+    System.out.println("Enter discipline index to update: ");
+    int index = this.reader.nextInt();
+
+    this.reader.nextLine(); // Read to end of line
+    System.out.println("Enter new discipline name");
+    String name = this.reader.nextLine();
+
+    this.controller.updateDisciplineByIndex(index, name);
+    System.out.printf("Updated discipline at %d!", index);
+  }
+
   private void update() {
     ArrayList<String> optionList = new ArrayList<String>(
         Arrays.asList(
-            "go back", "update teacher", "update activitie", "update discipline")
+            "go back", "update teacher", "update activity", "update discipline")
     );
 
     int choice = this.getNextOption(optionList);
@@ -267,25 +295,71 @@ public class Ui {
           this.updateTeacher();
           break;
         case 2:
-          this.getActivities();
+          this.updateActivity();
           break;
         case 3:
-          this.getDisciplines();
+          this.updateDiscipline();
           break;
       }
       choice = this.getNextOption(optionList);
     }
   }
 
-  private void delete() {
+  private void deleteTeacher() {
+    this.reader.nextLine(); // Read to end of line
 
+    System.out.println("Enter teacher index to delete: ");
+    int index = this.reader.nextInt();
+
+    this.controller.deleteTeacher(index);
+  }
+
+  private void deleteActivity() {
+    this.reader.nextLine(); // Read to end of line
+
+    System.out.println("Enter activity index to delete: ");
+    int index = this.reader.nextInt();
+
+    this.controller.deleteActivity(index);
+  }
+
+  private void deleteDiscipline() {
+    this.reader.nextLine(); // Read to end of line
+
+    System.out.println("Enter discipline index to delete: ");
+    int index = this.reader.nextInt();
+
+    this.controller.deleteDiscipline(index);
+  }
+
+  private void delete() {
+    ArrayList<String> optionList = new ArrayList<String>(
+      Arrays.asList(
+        "go back", "delete teacher", "delete activity", "delete discipline")
+    );
+
+    int choice = this.getNextOption(optionList);
+    while (choice != 0) {
+      switch (choice) {
+        case 1:
+          this.deleteTeacher();
+          break;
+        case 2:
+          this.deleteActivity();
+          break;
+        case 3:
+          this.deleteDiscipline();
+          break;
+      }
+      choice = this.getNextOption(optionList);
+    }
   }
 
   public void run() {
     System.out.println("Running the ui!");
     this.controller.addTeacher("Some teacher name!");
-    this.controller.addDiscipline("Some teacher name!");
-    this.controller.addActivity("Some teacher name!");
+    this.controller.addDiscipline("Some activity name!");
+    this.controller.addActivity("Some activity name!");
     System.out.println("Finished my job!");
 
     ArrayList<String> optionList = new ArrayList<String>(
@@ -296,7 +370,6 @@ public class Ui {
     int choice = this.getNextOption(optionList);
     while (choice != 0) {
       switch (choice) {
-        // Add choices
         case 1:
           this.create();
           break;

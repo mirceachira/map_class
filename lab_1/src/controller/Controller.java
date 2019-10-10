@@ -58,6 +58,26 @@ public class Controller {
   }
 
   public void updateTeacherByIndex(int index, String name) {
-    this.teacherRepo.updateByIndex(index, name);
+    Teacher currentTeacher = this.teacherRepo.getByIndex(index);
+    currentTeacher.setName(name);
+    this.teacherRepo.setAtIndex(currentTeacher, index);
   }
+
+  public void updateActivityByIndex(int index, String name) {
+    Activity currentActivity = this.activityRepo.getByIndex(index);
+    currentActivity.setName(name);
+    this.activityRepo.setAtIndex(currentActivity, index);
+  }
+
+  public void updateDisciplineByIndex(int index, String name) {
+    Discipline currentDiscipline = this.disciplineRepo.getByIndex(index);
+    currentDiscipline.setName(name);
+    this.disciplineRepo.setAtIndex(currentDiscipline, index);
+  }
+
+  public void deleteTeacher(int index) { this.teacherRepo.deleteIndex(index); }
+
+  public void deleteDiscipline(int index) { this.activityRepo.deleteIndex(index); }
+
+  public void deleteActivity(int index) { this.disciplineRepo.deleteIndex(index); }
 }
