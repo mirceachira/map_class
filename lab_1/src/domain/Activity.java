@@ -2,9 +2,11 @@ package domain;
 
 public class Activity {
   public String name;
+  public String teacher_name;
 
-  public Activity(String name) {
+  public Activity(String name, String teacher_name) {
     this.name = name;
+    this.teacher_name = teacher_name;
   }
 
   public String getName() {

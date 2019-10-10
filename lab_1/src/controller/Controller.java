@@ -23,8 +23,8 @@ public class Controller {
     this.teacherRepo.addEntry(newTeacher);
   }
 
-  public void addActivity(String name) {
-    Activity newActivity = new Activity(name);
+  public void addActivity(String name, String teacher_name) {
+    Activity newActivity = new Activity(name, teacher_name);
     this.activityRepo.addEntry(newActivity);
   }
 

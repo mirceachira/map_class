@@ -7,7 +7,6 @@ import domain.Teacher;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-import javax.sound.midi.SysexMessage;
 
 public class Ui {
 
@@ -52,13 +51,16 @@ public class Ui {
   }
 
   private void addActivity() {
-    this.reader.nextLine(); // Remove remaining newline
-
     System.out.println("Adding new activity...");
+    this.reader.nextLine(); // Remove remaining newline
     System.out.println("\tPlease enter new activity name:");
     String name = this.reader.nextLine();
 
-    this.controller.addActivity(name);
+    this.reader.nextLine(); // Remove remaining newline
+    System.out.println("\tPlease enter new activity teacher_name:");
+    String teacher_name = this.reader.nextLine();
+
+    this.controller.addActivity(name, teacher_name);
     System.out.println("Done adding new activity!");
   }
 
@@ -74,7 +76,7 @@ public class Ui {
   }
 
   private void create() {
-    ArrayList<String> optionList = new ArrayList<String>(
+    ArrayList<String> optionList = new ArrayList<>(
         Arrays.asList(
             "go back", "add new teacher", "add new activity", "add new discipline")
     );
@@ -118,7 +120,7 @@ public class Ui {
   }
 
   private void getTeachers() {
-    ArrayList<String> optionList = new ArrayList<String>(
+    ArrayList<String> optionList = new ArrayList<>(
         Arrays.asList(
             "go back", "get all teachers", "get teacher by index")
     );
@@ -158,7 +160,7 @@ public class Ui {
   }
 
   private void getActivities() {
-    ArrayList<String> optionList = new ArrayList<String>(
+    ArrayList<String> optionList = new ArrayList<>(
         Arrays.asList(
             "go back", "get all activities", "get activity by index")
     );
@@ -198,7 +200,7 @@ public class Ui {
   }
 
   private void getDisciplines() {
-    ArrayList<String> optionList = new ArrayList<String>(
+    ArrayList<String> optionList = new ArrayList<>(
         Arrays.asList(
             "go back", "get all disciplines", "get discipline by index")
     );
@@ -218,7 +220,7 @@ public class Ui {
   }
 
   private void retrieve() {
-    ArrayList<String> optionList = new ArrayList<String>(
+    ArrayList<String> optionList = new ArrayList<>(
         Arrays.asList(
             "go back", "get teachers", "get activities", "get disciplines")
     );
@@ -283,7 +285,7 @@ public class Ui {
   }
 
   private void update() {
-    ArrayList<String> optionList = new ArrayList<String>(
+    ArrayList<String> optionList = new ArrayList<>(
         Arrays.asList(
             "go back", "update teacher", "update activity", "update discipline")
     );
@@ -333,7 +335,7 @@ public class Ui {
   }
 
   private void delete() {
-    ArrayList<String> optionList = new ArrayList<String>(
+    ArrayList<String> optionList = new ArrayList<>(
       Arrays.asList(
         "go back", "delete teacher", "delete activity", "delete discipline")
     );
@@ -357,12 +359,27 @@ public class Ui {
 
   public void run() {
     System.out.println("Running the ui!");
-    this.controller.addTeacher("Some teacher name!");
-    this.controller.addDiscipline("Some activity name!");
-    this.controller.addActivity("Some activity name!");
+    this.controller.addTeacher("Teacher 0");
+    this.controller.addTeacher("Teacher 1");
+    this.controller.addTeacher("Teacher 2");
+    this.controller.addTeacher("Teacher 3");
+    this.controller.addTeacher("Teacher 4");
+
+    this.controller.addDiscipline("Discipline 0");
+    this.controller.addDiscipline("Discipline 1");
+    this.controller.addDiscipline("Discipline 2");
+    this.controller.addDiscipline("Discipline 3");
+    this.controller.addDiscipline("Discipline 4");
+
+    this.controller.addActivity("Activity 0", "Teacher 1");
+    this.controller.addActivity("Activity 1", "Teacher 1");
+    this.controller.addActivity("Activity 2", "Teacher 2");
+    this.controller.addActivity("Activity 3", "Teacher 2");
+    this.controller.addActivity("Activity 4", "Teacher 3");
+
     System.out.println("Finished my job!");
 
-    ArrayList<String> optionList = new ArrayList<String>(
+    ArrayList<String> optionList = new ArrayList<>(
         Arrays.asList(
             "quit the application", "create", "retrieve", "update", "delete")
     );
