@@ -3,6 +3,7 @@ package ui;
 import controller.Controller;
 import domain.Activity;
 import domain.Discipline;
+import domain.Relation;
 import domain.Teacher;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,11 +57,7 @@ public class Ui {
     System.out.println("\tPlease enter new activity name:");
     String name = this.reader.nextLine();
 
-    this.reader.nextLine(); // Remove remaining newline
-    System.out.println("\tPlease enter new activity teacher_name:");
-    String teacher_name = this.reader.nextLine();
-
-    this.controller.addActivity(name, teacher_name);
+    this.controller.addActivity(name);
     System.out.println("Done adding new activity!");
   }
 
@@ -75,10 +72,26 @@ public class Ui {
     System.out.println("Done adding new discipline!");
   }
 
+  private void addRelation() {
+    this.reader.nextLine(); // Remove remaining newline
+    System.out.println("Adding new relation...");
+    System.out.println("\tPlease enter new relation keyA:");
+    String keyA = this.reader.nextLine();
+
+    this.reader.nextLine(); // Remove remaining newline
+    System.out.println("Adding new relation...");
+    System.out.println("\tPlease enter new relation keyB:");
+    String keyB = this.reader.nextLine();
+
+
+    this.controller.addRelation(keyA, keyB);
+    System.out.println("Done adding new relation!");
+  }
+
   private void create() {
     ArrayList<String> optionList = new ArrayList<>(
         Arrays.asList(
-            "go back", "add new teacher", "add new activity", "add new discipline")
+            "go back", "add new teacher", "add new activity", "add new discipline", "add new relation")
     );
 
     int choice = this.getNextOption(optionList);
@@ -219,10 +232,50 @@ public class Ui {
     }
   }
 
+  private void getAllRelations() {
+    ArrayList<Relation> relationList = this.controller.getAllRelations();
+
+    System.out.print("These are all your relations");
+    for (int i=0; i<relationList.size(); i++) {
+      System.out.printf("\t%d - %s\n", i, relationList.get(i));
+    }
+  }
+
+  private void getRelationByIndex() {
+    this.reader.nextLine();
+
+    System.out.println("Enter relation index: ");
+    int index = this.reader.nextInt();
+
+    Relation entry = this.controller.getRelationByIndex(index);
+
+    System.out.printf("\t%s", entry);
+  }
+
+  private void getRelations() {
+    ArrayList<String> optionList = new ArrayList<>(
+            Arrays.asList(
+                    "go back", "get all relations", "get relation by index")
+    );
+
+    int choice = this.getNextOption(optionList);
+    while (choice != 0) {
+      switch (choice) {
+        case 1:
+          this.getAllRelations();
+          break;
+        case 2:
+          this.getRelationByIndex();
+          break;
+      }
+      choice = this.getNextOption(optionList);
+    }
+  }
+
   private void retrieve() {
     ArrayList<String> optionList = new ArrayList<>(
         Arrays.asList(
-            "go back", "get teachers", "get activities", "get disciplines")
+            "go back", "get teachers", "get activities", "get disciplines", "get relations")
     );
 
     int choice = this.getNextOption(optionList);
@@ -236,6 +289,9 @@ public class Ui {
           break;
         case 3:
           this.getDisciplines();
+          break;
+        case 4:
+          this.getRelations();
           break;
       }
       choice = this.getNextOption(optionList);
@@ -284,10 +340,28 @@ public class Ui {
     System.out.printf("Updated discipline at %d!", index);
   }
 
+  private void updateRelation() {
+    this.reader.nextLine(); // Read to end of line
+
+    System.out.println("Enter relation index to update: ");
+    int index = this.reader.nextInt();
+
+    this.reader.nextLine(); // Read to end of line
+    System.out.println("Enter new keyA");
+    String keyA = this.reader.nextLine();
+
+    this.reader.nextLine(); // Read to end of line
+    System.out.println("Enter new keyB");
+    String keyB = this.reader.nextLine();
+
+    this.controller.updateRelationByIndex(index, keyA, keyB);
+    System.out.printf("Updated discipline at %d!", index);
+  }
+
   private void update() {
     ArrayList<String> optionList = new ArrayList<>(
         Arrays.asList(
-            "go back", "update teacher", "update activity", "update discipline")
+            "go back", "update teacher", "update activity", "update discipline", "update relation")
     );
 
     int choice = this.getNextOption(optionList);
@@ -301,6 +375,9 @@ public class Ui {
           break;
         case 3:
           this.updateDiscipline();
+          break;
+        case 4:
+          this.updateRelation();
           break;
       }
       choice = this.getNextOption(optionList);
@@ -334,10 +411,19 @@ public class Ui {
     this.controller.deleteDiscipline(index);
   }
 
+  private void deleteRelation() {
+    this.reader.nextLine(); // Read to end of line
+
+    System.out.println("Enter relation index to delete: ");
+    int index = this.reader.nextInt();
+
+    this.controller.deleteRelation(index);
+  }
+
   private void delete() {
     ArrayList<String> optionList = new ArrayList<>(
       Arrays.asList(
-        "go back", "delete teacher", "delete activity", "delete discipline")
+        "go back", "delete teacher", "delete activity", "delete discipline", "delete relation")
     );
 
     int choice = this.getNextOption(optionList);
@@ -351,6 +437,9 @@ public class Ui {
           break;
         case 3:
           this.deleteDiscipline();
+          break;
+        case 4:
+          this.deleteRelation();
           break;
       }
       choice = this.getNextOption(optionList);
@@ -371,11 +460,17 @@ public class Ui {
     this.controller.addDiscipline("Discipline 3");
     this.controller.addDiscipline("Discipline 4");
 
-    this.controller.addActivity("Activity 0", "Teacher 1");
-    this.controller.addActivity("Activity 1", "Teacher 1");
-    this.controller.addActivity("Activity 2", "Teacher 2");
-    this.controller.addActivity("Activity 3", "Teacher 2");
-    this.controller.addActivity("Activity 4", "Teacher 3");
+    this.controller.addActivity("Activity 0");
+    this.controller.addActivity("Activity 1");
+    this.controller.addActivity("Activity 2");
+    this.controller.addActivity("Activity 3");
+    this.controller.addActivity("Activity 4");
+
+    this.controller.addRelation("Activity 0", "Teacher 1");
+    this.controller.addRelation("Activity 1", "Teacher 1");
+    this.controller.addRelation("Activity 2", "Teacher 2");
+    this.controller.addRelation("Activity 3", "Teacher 2");
+    this.controller.addRelation("Activity 4", "Teacher 3");
 
     System.out.println("Finished my job!");
 
