@@ -1,14 +1,31 @@
 package domain;
 
-public class Discipline {
+import utils.CustomInvalidValueException;
+
+import java.io.Serializable;
+
+public class Discipline  extends MyBaseObject implements Serializable {
   private String name;
 
   public Discipline(String name) {
+    super(name);
     this.name = name;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void validateName(String name) throws  CustomInvalidValueException {
+    if (name.length() <= 1) {
+      throw new CustomInvalidValueException();
+    }
+  }
+  public boolean setName(String name) {
+    try {
+      this.validateName(name);
+      this.name = name;
+    } catch (CustomInvalidValueException e) {
+      return false;
+    }
+
+    return true;
   }
 
   public String getName() {
@@ -17,8 +34,6 @@ public class Discipline {
 
   @Override
   public String toString() {
-    return "Discipline{" +
-        "name='" + name + '\'' +
-        '}';
+    return name;
   }
 }

@@ -1,55 +1,44 @@
 package domain;
 
-public class Relation<KeyType> {
-    public KeyType keyA;
-    public KeyType keyB;
+import java.io.Serializable;
 
-    public Relation(KeyType keyA, KeyType keyB) {
+public class Relation extends MyBaseObject implements Serializable {
+    public String keyA;
+    public String keyB;
+
+    public Relation(String line) {
+        super(line);
+
+        String[] lineData = line.split(",");
+
+        this.keyA = lineData[0];
+        this.keyB = lineData[1];
+    }
+
+    public Relation(String keyA, String keyB) {
+        super("Nothing really");
         this.keyA = keyA;
         this.keyB = keyB;
     }
 
-    public KeyType getKeyA() {
+    public String getKeyA() {
         return keyA;
     }
 
-    public void setKeyA(KeyType keyA) {
+    public void setKeyA(String keyA) {
         this.keyA = keyA;
     }
 
-    public KeyType getKeyB() {
+    public String getKeyB() {
         return keyB;
     }
 
-    public void setKeyB(KeyType keyB) {
+    public void setKeyB(String keyB) {
         this.keyB = keyB;
     }
-}
 
-//{
-//
-//    private ArrayList<KeyType> firstColumn = new ArrayList<KeyType>();
-//    private ArrayList<KeyType> secondColumn = new ArrayList<KeyType>();
-//
-//    public void addRelation(KeyType keyA, KeyType keyB) {
-//        firstColumn.add(keyA);
-//        secondColumn.add(keyB);
-//    }
-//
-//    public void removeRelation(int index) {
-//        firstColumn.remove(index);
-//        secondColumn.remove(index);
-//    }
-//
-//    public boolean existsRelation(KeyType keyA, KeyType keyB) {
-//        for (int i = 0; i < firstColumn.size(); i++) {
-//            if (firstColumn.get(i) == keyA && secondColumn.get(i) == keyB) {
-//                return true;
-//            } else if (firstColumn.get(i) == keyB && secondColumn.get(i) == keyA) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
-//}
+    @Override
+    public String toString() {
+        return this.keyA + "," + this.keyB;
+    }
+}

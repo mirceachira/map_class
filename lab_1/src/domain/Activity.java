@@ -1,9 +1,14 @@
 package domain;
 
-public class Activity {
+import utils.CustomInvalidValueException;
+
+import java.io.Serializable;
+
+public class Activity  extends MyBaseObject implements Serializable {
   public String name;
 
   public Activity(String name) {
+    super(name);
     this.name = name;
   }
 
@@ -11,14 +16,24 @@ public class Activity {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void validateName(String name) throws  CustomInvalidValueException {
+    if (name.length() <= 1) {
+      throw new CustomInvalidValueException();
+    }
+  }
+  public boolean setName(String name) {
+    try {
+      this.validateName(name);
+      this.name = name;
+    } catch (CustomInvalidValueException e) {
+      return false;
+    }
+
+    return true;
   }
 
   @Override
   public String toString() {
-    return "Activity{" +
-        "name='" + name + '\'' +
-        '}';
+    return name;
   }
 }
