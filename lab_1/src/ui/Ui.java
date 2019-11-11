@@ -45,7 +45,13 @@ public class Ui {
     System.out.println("\tPlease enter new teacher name:");
     String name = this.reader.nextLine();
 
-    this.controller.addTeacher(name);
+    this.reader.nextLine(); // Remove remaining newline
+
+    System.out.println("Adding new teacher...");
+    System.out.println("\tPlease enter new teacher rank:");
+    String rank = this.reader.nextLine();
+
+    this.controller.addTeacher(name, rank);
     System.out.println("Done adding new teacher!");
   }
 
@@ -813,6 +819,54 @@ public class Ui {
     }
   }
 
+  private void teachersByRank() {
+    this.reader.nextLine(); // Read to end of line
+
+    System.out.println("Enter teacher rank (professor / lecturer / dean): ");
+    String rank = this.reader.nextLine();
+
+    ArrayList<Teacher> teacherList = this.controller.getSortedTeachersByRank(rank);
+
+    System.out.print("These are all your teachers for rank " + rank + "\n");
+    for (int i=0; i<teacherList.size(); i++) {
+      System.out.printf("\t%d - %s\n", i, teacherList.get(i));
+    }
+
+  }
+
+  private void activitiesByRoom() {
+
+  }
+
+  private void formationTimetable() {
+
+  }
+
+  private void reports() {
+    ArrayList<String> optionList = new ArrayList<>(
+            Arrays.asList(
+                    "go back", "sorted teachers by rank", "sorted activities in a room", "formation timetable"
+            )
+    );
+
+    int choice = this.getNextOption(optionList);
+    while (choice != 0) {
+      switch (choice) {
+        case 1:
+          this.teachersByRank();
+          break;
+        case 2:
+          this.activitiesByRoom();
+          break;
+        case 3:
+          this.formationTimetable();
+          break;
+      }
+      choice = this.getNextOption(optionList);
+    }
+  }
+
+
   public void run() {
     System.out.println("Running the ui!");
 
@@ -828,11 +882,11 @@ public class Ui {
 //    this.controller.readRoomFile();
 
     // Adding in memory
-        this.controller.addTeacher("Teacher 0");
-        this.controller.addTeacher("Teacher 1");
-        this.controller.addTeacher("Teacher 2");
-        this.controller.addTeacher("Teacher 3");
-        this.controller.addTeacher("Teacher 4");
+        this.controller.addTeacher("Teacher 0", "lecturer");
+        this.controller.addTeacher("Teacher 1", "lecturer");
+        this.controller.addTeacher("Teacher 2", "professor");
+        this.controller.addTeacher("Teacher 3", "professor");
+        this.controller.addTeacher("Teacher 4", "dean");
 
         this.controller.addDiscipline("Discipline 0");
         this.controller.addDiscipline("Discipline 1");
@@ -882,7 +936,7 @@ public class Ui {
 
     ArrayList<String> optionList = new ArrayList<>(
         Arrays.asList(
-            "quit the application", "create", "retrieve", "update", "delete")
+            "quit the application", "create", "retrieve", "update", "delete", "reports")
     );
 
     int choice = this.getNextOption(optionList);
@@ -899,6 +953,9 @@ public class Ui {
           break;
         case 4:
           this.delete();
+          break;
+        case 5:
+          this.reports();
           break;
       }
       choice = this.getNextOption(optionList);

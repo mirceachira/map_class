@@ -6,16 +6,28 @@ import java.io.Serializable;
 
 public class Teacher extends MyBaseObject implements Serializable {
   private String name;
+  private String rank;
 
-  public Teacher(String name) {
+  public Teacher(String line) {
+    super(line);
+    String[] lineData = line.split(",");
+
+    this.name = lineData[0];
+    this.rank = lineData[1];
+  }
+
+  public Teacher(String name, String rank) {
     super(name);
     this.name = name;
+    this.rank = rank;
   }
 
   @Override
   public String getName() {
     return name;
   }
+
+  public String getRank() { return rank; }
 
   public void validateName(String name) throws  CustomInvalidValueException {
     if (name.length() <= 1) {

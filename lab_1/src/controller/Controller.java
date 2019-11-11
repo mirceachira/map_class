@@ -4,34 +4,50 @@ import domain.*;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Properties;
+import java.util.Comparator;
+import java.util.stream.Stream;
 
 import repository.FileRepository;
+import repository.Repository;
+import repository.RoomRepository;
+import repository.TeacherRepository;
 
 
 public class Controller {
+  // Database repository
+  private TeacherRepository teacherRepo;
+  private RoomRepository roomRepo;
+
+  // File repository
   private FileRepository<Activity> activityRepo;
   private FileRepository<Discipline> disciplineRepo;
-  private FileRepository<Teacher> teacherRepo;
-  private FileRepository<Room> roomRepo;
   private FileRepository<Formation> formationRepo;
-  private FileRepository<Relation> teacherToActivityRelationRepo;
-  private FileRepository<Relation> formationToActivityRelationRepo;
-  private FileRepository<Relation> roomToActivityRelationRepo;
+
+  // In memory repository
+  private Repository<Relation> teacherToActivityRelationRepo;
+  private Repository<Relation> formationToActivityRelationRepo;
+  private Repository<Relation> roomToActivityRelationRepo;
 
   public Controller() {
+    this.teacherRepo = new TeacherRepository();
+    this.roomRepo = new RoomRepository();
+
     this.activityRepo = new FileRepository<Activity>(Activity.class, "activity.csv");
     this.disciplineRepo = new FileRepository<Discipline>(Discipline.class,"discipline.csv");
-    this.teacherRepo = new FileRepository<Teacher>(Teacher.class, "teacher.csv");
-    this.roomRepo = new FileRepository<Room>(Room.class,"room.csv");
     this.formationRepo = new FileRepository<Formation>(Formation.class, "formation.csv");
-    this.teacherToActivityRelationRepo = new FileRepository<Relation>(Relation.class, "teacher-activity.csv");
-    this.formationToActivityRelationRepo = new FileRepository<Relation>(Relation.class, "formation-activity.csv");
-    this.roomToActivityRelationRepo = new FileRepository<Relation>(Relation.class, "room-activity.csv");
+
+    this.teacherToActivityRelationRepo = new Repository<Relation>();
+    this.formationToActivityRelationRepo = new Repository<Relation>();
+    this.roomToActivityRelationRepo = new Repository<Relation>();
   }
 
   public void addTeacher(String name) {
     Teacher newTeacher = new Teacher(name);
+    this.teacherRepo.addEntry(newTeacher);
+  }
+
+  public void addTeacher(String name, String rank) {
+    Teacher newTeacher = new Teacher(name, rank);
     this.teacherRepo.addEntry(newTeacher);
   }
 
@@ -208,4 +224,23 @@ public class Controller {
   public void deleteFormationToActivityRelation(int index) { this.formationToActivityRelationRepo.deleteIndex(index); }
 
   public void deleteRoomToActivityRelation(int index) { this.formationToActivityRelationRepo.deleteIndex(index); }
+
+  public ArrayList<Teacher> getSortedTeachersByRank(String rank) {
+    ArrayList<Teacher> teachers = this.teacherRepo.getAllEntries();
+
+    System.out.printf("%d\n", teachers.size());
+    teachers.stream()
+            .filter(t -> t.getRank() == rank)
+            .sorted(Comparator.comparing(Teacher::getName)).forEach(System.out::println);
+
+
+    Stream<Teacher> teacherStream = teachers.stream()
+            .filter(t -> t.getRank() == rank)
+            .sorted(Comparator.comparing(Teacher::getName));
+
+    ArrayList<Teacher> result = new ArrayList<Teacher>();
+    teacherStream.forEach(result::add);
+
+    return result;
+  }
 }
