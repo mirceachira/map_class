@@ -3,9 +3,7 @@ package ui;
 import controller.Controller;
 import domain.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class Ui {
 
@@ -131,15 +129,42 @@ public class Ui {
   private void addRoomToActivityRelation() {
     this.reader.nextLine(); // Remove remaining newline
     System.out.println("Adding new room-activity relation...");
-    System.out.println("\tPlease enter new relation keyA:");
+    System.out.println("\tPlease enter new relation room name:");
     String keyA = this.reader.nextLine();
 
     this.reader.nextLine(); // Remove remaining newline
-    System.out.println("Adding new relation...");
-    System.out.println("\tPlease enter new relation keyB:");
+    System.out.println("\tPlease enter new relation activity name:");
     String keyB = this.reader.nextLine();
 
-    this.controller.addFormationToActivityRelation(keyA, keyB);
+    // TODO: move this to utils for reading day and add a test or two
+    // This encoding helps when sorting by date
+    Map<String, String> map = new HashMap<String, String>();
+    map.put("Monday", "a");
+    map.put("Tuesday", "b");
+    map.put("Wednesday", "c");
+    map.put("Thursday", "d");
+    map.put("Friday", "e");
+
+
+    this.reader.nextLine(); // Remove remaining newline
+    System.out.println("\tValid day values: " + "Monday, Tuesday, Wednesday, Thursday, Friday\n");
+    System.out.println("\tPlease enter new relation day of the week in lowercase only first two letters (mo/tu/we/th/fr/sa/su):");
+    String day = this.reader.nextLine();
+    while (!map.containsKey(day)) {
+      this.reader.nextLine(); // Remove remaining newline
+      System.out.println("\tInvalid day of the week!\n");
+      System.out.println("\tValid day values: " + "Monday, Tuesday, Wednesday, Thursday, Friday\n");
+      System.out.println("\tPlease enter new relation day of the week in lowercase only first two letters (mo/tu/we/th/fr/sa/su):");
+      day = this.reader.nextLine();
+    }
+
+    this.reader.nextLine(); // Remove remaining newline
+    System.out.println("\tPlease enter new relation hour in the day to start, must be 8<=n<=18 and only even hours for valid hours, (ex '14'):");
+    String hour = this.reader.nextLine();
+    //TODO try catch invalid hours, read until valid
+
+    String keyC = day + " " + hour;
+    this.controller.addRoomToActivityRelation(keyA, keyB, keyC);
     System.out.println("Done adding new room-activity relation!");
   }
 
@@ -835,11 +860,31 @@ public class Ui {
   }
 
   private void activitiesByRoom() {
+    this.reader.nextLine(); // Read to end of line
 
+    System.out.println("Enter room name: ");
+    String name = this.reader.nextLine();
+
+    ArrayList<Relation> relationList = this.controller.activitiesByRoom(name);
+
+    System.out.print("These are all your activities for room " + name + ":\n");
+    for (int i=0; i<relationList.size(); i++) {
+      System.out.printf("\t%d - %s %s\n", i, relationList.get(i).getKeyA(), relationList.get(i).getKeyC());
+    }
   }
 
   private void formationTimetable() {
+    this.reader.nextLine(); // Read to end of line
 
+    System.out.println("Enter formation name: ");
+    String name = this.reader.nextLine();
+
+    ArrayList<Relation> relationList = this.controller.formationTimetable(name);
+
+    System.out.print("These are all your activities for formation " + name + ":\n");
+    for (int i=0; i<relationList.size(); i++) {
+      System.out.printf("\t%d - %s %s %s\n", i, relationList.get(i).getKeyB(), relationList.get(i).getKeyA(), relationList.get(i).getKeyC());
+    }
   }
 
   private void reports() {
@@ -926,11 +971,15 @@ public class Ui {
         this.controller.addFormationToActivityRelation("Activity 3", "Formation 2");
         this.controller.addFormationToActivityRelation("Activity 4", "Formation 3");
 
-        this.controller.addRoomToActivityRelation("Activity 0", "Room 1");
-        this.controller.addRoomToActivityRelation("Activity 1", "Room 1");
-        this.controller.addRoomToActivityRelation("Activity 2", "Room 2");
-        this.controller.addRoomToActivityRelation("Activity 3", "Room 2");
-        this.controller.addRoomToActivityRelation("Activity 4", "Room 3");
+        this.controller.addRoomToActivityRelation("Activity 0", "Room 1", "a 12");
+        this.controller.addRoomToActivityRelation("Activity 0", "Room 1", "b 12");
+        this.controller.addRoomToActivityRelation("Activity 0", "Room 1", "c 12");
+        this.controller.addRoomToActivityRelation("Activity 1", "Room 1", "a 14");
+        this.controller.addRoomToActivityRelation("Activity 1", "Room 2", "b 14");
+        this.controller.addRoomToActivityRelation("Activity 1", "Room 2", "c 12");
+        this.controller.addRoomToActivityRelation("Activity 2", "Room 3", "a 12");
+        this.controller.addRoomToActivityRelation("Activity 3", "Room 3", "a 14");
+        this.controller.addRoomToActivityRelation("Activity 4", "Room 3", "a 16");
 
     System.out.println("Finished my job!");
 

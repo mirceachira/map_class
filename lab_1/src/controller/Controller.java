@@ -5,6 +5,8 @@ import domain.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import repository.FileRepository;
@@ -81,8 +83,8 @@ public class Controller {
     this.formationToActivityRelationRepo.addEntry(newRelation);
   }
 
-  public void addRoomToActivityRelation(String keyA, String keyB) {
-    Relation newRelation = new Relation(keyA, keyB);
+  public void addRoomToActivityRelation(String keyA, String keyB, String keyC) {
+    Relation newRelation = new Relation(keyA, keyB, keyC);
     this.roomToActivityRelationRepo.addEntry(newRelation);
   }
 
@@ -228,14 +230,8 @@ public class Controller {
   public ArrayList<Teacher> getSortedTeachersByRank(String rank) {
     ArrayList<Teacher> teachers = this.teacherRepo.getAllEntries();
 
-    System.out.printf("%d\n", teachers.size());
-    teachers.stream()
-            .filter(t -> t.getRank() == rank)
-            .sorted(Comparator.comparing(Teacher::getName)).forEach(System.out::println);
-
-
     Stream<Teacher> teacherStream = teachers.stream()
-            .filter(t -> t.getRank() == rank)
+            .filter(t -> t.getRank().equals(rank))
             .sorted(Comparator.comparing(Teacher::getName));
 
     ArrayList<Teacher> result = new ArrayList<Teacher>();
@@ -243,4 +239,73 @@ public class Controller {
 
     return result;
   }
+
+  public ArrayList<Relation> activitiesByRoom(String roomName) {
+    ArrayList<Relation> roomToActivityRelations = this.roomToActivityRelationRepo.getAllEntries();
+
+    Stream<Relation> activityStream = roomToActivityRelations.stream()
+            .filter(t -> t.getKeyB().equals(roomName))
+            .sorted(Comparator.comparing(Relation::getKeyC));
+
+    ArrayList<Relation> result = new ArrayList<Relation>();
+    activityStream.forEach(result::add);
+
+    Map<String, String> map = new HashMap<String, String>();
+    map.put("a", "Monday");
+    map.put("b", "Tuesday");
+    map.put("c", "Wednesday");
+    map.put("d", "Thursday");
+    map.put("e", "Friday");
+    result.forEach(x -> x.setKeyC(map.get(x.getKeyC().split(" ")[0]) + " " + x.getKeyC().split(" ")[1]));
+
+    return result;
+  }
+
+  public ArrayList<Relation> formationTimetable(String formationName) {
+    ArrayList<Relation> formationToActivityRelations = this.formationToActivityRelationRepo.getAllEntries();
+
+    Stream<Relation> activityStream = formationToActivityRelations.stream()
+            .filter(t -> t.getKeyB().equals(formationName))
+            .sorted(Comparator.comparing(Relation::getKeyA));
+    ArrayList<Relation> formationActivities = new ArrayList<Relation>();
+    activityStream.forEach(formationActivities::add);
+
+    // TODO: fix bug when adding activity in result multiple times, no check if it was already added, add a flag
+    // TODO: use streams for this?
+    ArrayList<Relation> result = new ArrayList<Relation>();
+    ArrayList<Relation> roomToActivityRelations = this.roomToActivityRelationRepo.getAllEntries();
+    for (int i=0; i<formationActivities.size(); i++) { // for each activity that this formation must do
+      Relation r = formationActivities.get(i);
+      for (int j=0; j<roomToActivityRelations.size(); j++) {
+        Relation p = roomToActivityRelations.get(j);
+        if (p.getKeyA().equals(r.getKeyA())) {  // look for a room and time for that activity
+          if (result.size() == 0) {
+            result.add(p);
+          } else {
+            boolean add = true;
+            for (int k = 0; k < result.size(); k++) {   // if the time is not occupied then add it to the schedule
+              Relation e = result.get(k);
+              if (e.getKeyC().equals(p.getKeyC())) {
+                add = false;
+              }
+            }
+            if (add) {
+              result.add(p);
+            }
+          }
+        }
+      }
+    }
+
+    Map<String, String> map = new HashMap<String, String>();
+    map.put("a", "Monday");
+    map.put("b", "Tuesday");
+    map.put("c", "Wednesday");
+    map.put("d", "Thursday");
+    map.put("e", "Friday");
+    result.forEach(x -> x.setKeyC(map.get(x.getKeyC().split(" ")[0]) + " " + x.getKeyC().split(" ")[1]));
+
+    return result;
+  }
+
 }
