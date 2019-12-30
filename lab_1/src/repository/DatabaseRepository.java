@@ -1,7 +1,5 @@
 package repository;
 
-import domain.Teacher;
-
 import java.sql.*;
 
 abstract class DatabaseRepository {

@@ -1,27 +1,17 @@
 import controller.Controller;
-import domain.Teacher;
-import guiController.guiController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ui.Ui;
 
-
-//public class Main {
-//  public static void main(String[] args) {
-//    Ui myApplication = new Ui();
-//    myApplication.run();
-//  };
-//}
 
 public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) throws Exception{
     FXMLLoader loader = new FXMLLoader(getClass().getResource("fxGui.fxml"));
-    guiController controller = new guiController();
+    Controller controller = new Controller();
 
     controller.addTeacher("Teacher 0", "lecturer");
     controller.addTeacher("Teacher 1", "lecturer");
@@ -53,9 +43,27 @@ public class Main extends Application {
     controller.addRoom("Room 3");
     controller.addRoom("Room 4");
 
-    controller.addTimetableRelation("Activity 1", "Room 1", "Teacher 1", "Formation 1");
-    controller.addTimetableRelation("Activity 1", "Room 2", "Teacher 3", "Formation 2");
-    controller.addTimetableRelation("Activity 1", "Room 0", "Teacher 4", "Formation 3");
+    controller.addTimetableRelation(
+        "Activity 1",
+        "Room 1",
+        "Teacher 1",
+        "Formation 1",
+        ""
+    );
+    controller.addTimetableRelation(
+        "Activity 1",
+        "Room 2",
+        "Teacher 3",
+        "Formation 2",
+        ""
+    );
+    controller.addTimetableRelation(
+        "Activity 1",
+        "Room 0",
+        "Teacher 4",
+        "Formation 3",
+        ""
+    );
 
     loader.setController(controller);
     Parent root = (Parent)loader.load();
@@ -69,3 +77,18 @@ public class Main extends Application {
       launch(args);
     }
 }
+
+/*
+  TODO: drag and drop
+  TODO: check and clean project todos
+  TODO: install plugin to make it look pretty
+
+  Make use of this:
+      Map<String, String> map = new HashMap<String, String>();
+    map.put("a", "Monday");
+    map.put("b", "Tuesday");
+    map.put("c", "Wednesday");
+    map.put("d", "Thursday");
+    map.put("e", "Friday");
+    result.forEach(x -> x.setDateString(map.get(x.dateString.split(" ")[0]) + " " + x.dateString.split(" ")[1]));
+ */
