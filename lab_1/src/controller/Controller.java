@@ -30,6 +30,10 @@ public class Controller {
   private Repository<Relation> formationToActivityRelationRepo;
   private Repository<Relation> roomToActivityRelationRepo;
 
+  // One activity in one room by one teacher attented by one formation
+  // activity - room - teacher - formation !!!
+  private Repository<Relation> timetableRelationRepo;
+
   public Controller() {
     this.teacherRepo = new TeacherRepository();
     this.roomRepo = new RoomRepository();
@@ -41,6 +45,8 @@ public class Controller {
     this.teacherToActivityRelationRepo = new Repository<Relation>();
     this.formationToActivityRelationRepo = new Repository<Relation>();
     this.roomToActivityRelationRepo = new Repository<Relation>();
+
+    this.timetableRelationRepo = new Repository<Relation>();
   }
 
   public void addTeacher(String name) {
@@ -88,6 +94,11 @@ public class Controller {
     this.roomToActivityRelationRepo.addEntry(newRelation);
   }
 
+  public void addTimetableRelation(String keyA, String keyB, String keyC, String keyD) {
+    Relation newRelation = new Relation(keyA, keyB, keyC, keyD);
+    this.timetableRelationRepo.addEntry(newRelation);
+  }
+
   public ArrayList<Teacher> getAllTeachers() { return this.teacherRepo.getAllEntries(); }
 
   public ArrayList<Activity> getAllActivities() {
@@ -116,6 +127,10 @@ public class Controller {
 
   public ArrayList<Relation> getAllRoomToActivityRelations() {
     return this.roomToActivityRelationRepo.getAllEntries();
+  }
+
+  public ArrayList<Relation> getAllTimetableRelations() {
+    return this.timetableRelationRepo.getAllEntries();
   }
 
   public Teacher getTeacherByIndex(int index) {
@@ -148,6 +163,10 @@ public class Controller {
 
   public Relation getRoomToActivityRelationByIndex(int index) {
     return this.roomToActivityRelationRepo.getByIndex(index);
+  }
+
+  public Relation getTimetableRelationByIndex(int index) {
+    return this.timetableRelationRepo.getByIndex(index);
   }
 
   public void updateTeacherByIndex(int index, String name) {

@@ -3,10 +3,15 @@ package domain;
 import java.io.Serializable;
 
 public class Relation extends MyBaseObject implements Serializable {
-    public String keyA;
-    public String keyB;
-    public String keyC;
+    public String keyA; // name of first thing, usually activity
+    public String keyB; // name of second thing, duh
+    public String keyC; // name of third thing, relevant for timetableRelationship
+                        // for storing teacher name
+    public String keyD; // name of fourth thing, relevant for timetableRelationship
+                        // for storing a start date (ex: 'd 12')
+
     /*
+     Old note, should be removed I think.. but am too lazy to check...
      TODO: In case of room to formation keyC is a start date (ex: 'd 12'), therefore room id and date should be
      TODO: unique together ie you can't have two different activities in the same room at the same time
     */
@@ -21,8 +26,10 @@ public class Relation extends MyBaseObject implements Serializable {
 
         if (lineData.length == 3) {
             this.keyC = lineData[2];
+        } else if (lineData.length == 4){
+            this.keyC = lineData[3];
         } else {
-            this.keyC = "";
+            this.keyD = "";
         }
     }
 
@@ -38,6 +45,14 @@ public class Relation extends MyBaseObject implements Serializable {
         this.keyA = keyA;
         this.keyB = keyB;
         this.keyC = keyC;
+    }
+
+    public Relation(String keyA, String keyB, String keyC, String keyD) {
+        super("Nothing really");
+        this.keyA = keyA;
+        this.keyB = keyB;
+        this.keyC = keyC;
+        this.keyD = keyD;
     }
 
     public String getKeyA() {
@@ -64,8 +79,16 @@ public class Relation extends MyBaseObject implements Serializable {
         this.keyC = keyC;
     }
 
+    public String getKeyD() {
+        return keyD;
+    }
+
+    public void setKeyD(String keyD) {
+        this.keyD = keyD;
+    }
+
     @Override
     public String toString() {
-        return this.keyA + "\t" + this.keyB + "\t" + this.keyC;
+        return this.keyA + "\t" + this.keyB + "\t" + this.keyC + "\t" + this.keyD;
     }
 }
