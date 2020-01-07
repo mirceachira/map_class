@@ -2,20 +2,32 @@ package controller;
 
 import domain.*;
 
+import java.awt.event.MouseEvent;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import repository.ActivityRepository;
 import repository.DisciplineRepository;
 import repository.FormationRepository;
@@ -172,9 +184,13 @@ class BaseController {
   public void deleteFormation(int index) {
     this.formationRepo.deleteIndex(index);
   }
+
+  public void deleteRelation(int index) {
+    this.timetableRelationRepo.deleteIndex(index);
+  }
 }
 
-public class Controller extends BaseController {
+public class Controller extends BaseController implements Initializable {
 
   // Rooms
   @FXML
@@ -241,8 +257,8 @@ public class Controller extends BaseController {
 
   @FXML private GridPane timetableGrid;
 
-  @FXML
-  public void initialize() {
+  @Override
+  public void initialize(URL url, ResourceBundle rb) {
     roomNameColumn.setCellValueFactory(new PropertyValueFactory<Room, String>("name"));
     this.refreshRoomsTable();
 
@@ -484,7 +500,7 @@ public class Controller extends BaseController {
     ArrayList<Relation> relevantTimetableRelations = new ArrayList<Relation>();
 
     for (Relation allTimetableRelation : allTimetableRelations) {
-      if (allTimetableRelation.formationName.equals(formationName)) {
+      if (allTimetableRelation.formationName.equals(formationName) && allTimetableRelation.dateString.equals("")) {
         relevantTimetableRelations.add(allTimetableRelation);
       }
     }
@@ -495,6 +511,106 @@ public class Controller extends BaseController {
   @FXML
   void formationChangeHandler(Event event) {
     this.refreshTimetableRelationTable(this.formationNameRel.getText());
+  }
+
+  @FXML
+  void handleDragDetected(Event event) {
+    Dragboard db = timetableRelationTableView.startDragAndDrop(TransferMode.ANY);
+
+    ClipboardContent cb = new ClipboardContent();
+
+    String selectedName = this.timetableRelationTableView.getSelectionModel().getSelectedItem().toString();
+
+    // TODO: is this still relevant?
+    int indexInTable = -1;
+    ArrayList<Relation> rels = this.getAllTimetableRelations();
+    for (int i=0; i<rels.size(); i++) {
+      if (rels.get(i).toString().equals(selectedName)) {
+        indexInTable = i;
+        break;
+      }
+    }
+
+    cb.putString(rels.get(indexInTable).toString()); // TODO: Change this to table content serialized
+
+    db.setContent(cb);
+
+    event.consume();
+  }
+
+  @FXML
+  void handleDragOver(DragEvent event) {
+    if (event.getDragboard().hasString()) {
+      event.acceptTransferModes(TransferMode.ANY);
+//      System.out.println("Any transfer mode set!");
+    } else {
+      System.out.println("Error settings transfer mode set!");
+    }
+  }
+
+  @FXML
+  void handleDrop(DragEvent event) {
+    String s = event.getDragboard().getString();
+
+    // Find index in table
+    int indexInTable = -1;
+    ArrayList<Relation> rels = this.getAllTimetableRelations();
+    for (int i=0; i<rels.size(); i++) {
+      if (rels.get(i).toString().equals(s)) {
+        indexInTable = i;
+        break;
+      }
+    }
+
+    Node target = (Node)event.getTarget();
+    Integer colIndex = timetableGrid.getColumnIndex(target);
+    Integer rowIndex = timetableGrid.getRowIndex(target);
+
+    Relation r = rels.get(indexInTable);
+
+    Map<Integer, String> map = new HashMap<Integer, String>();
+    map.put(1, "a");
+    map.put(2, "b");
+    map.put(3, "c");
+    map.put(4, "d");
+    map.put(5, "e");
+    String dateValue = map.get(colIndex);
+
+    Map<Integer, String> map2 = new HashMap<Integer, String>();
+    map2.put(1, "8");
+    map2.put(2, "12");
+    map2.put(3, "14");
+    map2.put(4, "16");
+    map2.put(5, "18");
+    dateValue = dateValue + " " + map2.get(rowIndex);
+
+    this.deleteRelation(indexInTable);
+    this.refreshTimetableRelationTable(this.formationNameRel.getText());
+    r.setDateString(dateValue);
+    try {
+      this.addTimetableRelation(
+          r.getActivityName(),
+          r.getRoomName(),
+          r.getTeacherName(),
+          r.getFormationName(),
+          r.getDateString()
+      );
+
+//    System.out.printf("name is %s\n", target.toString());
+//    System.out.printf("Dropped the load %s x:%f y:%f\n", s, event.getX(), event.getY());
+//    System.out.printf("Dropped the load %s x:%d y:%d\n", s, colIndex, rowIndex);
+
+      Text text = new Text();
+      text.setText(r.getActivityName() + "\n" + r.getTeacherName());
+      // TODO: add handlers from here as well
+      timetableGrid.add(text, colIndex, rowIndex);
+
+    } catch (Exception e) {
+      System.out.println("Some exception occured!");
+      System.out.println(e.getMessage());
+    }
+
+    event.consume();
   }
 }
 

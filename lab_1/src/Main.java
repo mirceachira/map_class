@@ -69,7 +69,9 @@ public class Main extends Application {
     Parent root = (Parent)loader.load();
 
     primaryStage.setTitle("Patients and doctors");
-    primaryStage.setScene(new Scene(root));
+    Scene s = new Scene(root);
+    s.getStylesheets().add("style.css");
+    primaryStage.setScene(s);
     primaryStage.show();
   };
 
@@ -81,10 +83,9 @@ public class Main extends Application {
 /*
   TODO: drag and drop
   TODO: check and clean project todos
-  TODO: install plugin to make it look pretty
 
   Make use of this:
-      Map<String, String> map = new HashMap<String, String>();
+     Map<String, String> map = new HashMap<String, String>();
     map.put("a", "Monday");
     map.put("b", "Tuesday");
     map.put("c", "Wednesday");

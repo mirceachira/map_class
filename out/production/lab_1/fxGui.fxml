@@ -29,12 +29,12 @@
                         <VBox prefHeight="440.0" prefWidth="246.0" HBox.hgrow="ALWAYS">
                            <children>
                               <Pane layoutX="10.0" layoutY="35.0" prefHeight="42.0" prefWidth="282.0" />
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="336.0" text="room name" />
-                              <TextField fx:id="roomNameTextField" />
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="336.0" />
+                              <TextField fx:id="roomNameTextField" promptText="room name" />
                               <Button fx:id="buttonAddRoom" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonAddRoomHandler" text="add" textAlignment="CENTER" />
                               <Pane layoutX="10.0" layoutY="35.0" prefHeight="20.0" prefWidth="169.0" />
-                              <Label alignment="CENTER" layoutX="10.0" layoutY="77.0" prefHeight="26.0" prefWidth="282.0" text="new name" />
-                              <TextField fx:id="updateRoomNameField" layoutX="10.0" layoutY="27.0" />
+                              <Label alignment="CENTER" layoutX="10.0" layoutY="77.0" prefHeight="26.0" prefWidth="282.0" />
+                              <TextField fx:id="updateRoomNameField" layoutX="10.0" layoutY="27.0" promptText="new name" />
                               <Button fx:id="buttonUpdateRoom" alignment="CENTER" layoutX="10.0" layoutY="52.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonUpdateRoomHandler" text="update" textAlignment="CENTER" />
                               <Pane layoutX="10.0" layoutY="122.0" prefHeight="42.0" prefWidth="282.0" />
                               <Button fx:id="buttonDeleteRoom" alignment="CENTER" layoutX="10.0" layoutY="226.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonDeleteRoomHandler" text="delete" textAlignment="CENTER" />
@@ -62,12 +62,12 @@
                         <VBox prefHeight="440.0" prefWidth="246.0" HBox.hgrow="ALWAYS">
                            <children>
                               <Pane layoutX="10.0" layoutY="35.0" prefHeight="42.0" prefWidth="282.0" />
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="336.0" text="activity name" />
-                              <TextField fx:id="activityNameTextField" />
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="336.0" />
+                              <TextField fx:id="activityNameTextField" promptText="activity name" />
                               <Button fx:id="buttonAddActivity" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonAddActivityHandler" text="add" textAlignment="CENTER" />
                               <Pane layoutX="10.0" layoutY="35.0" prefHeight="20.0" prefWidth="169.0" />
-                              <Label alignment="CENTER" layoutX="10.0" layoutY="77.0" prefHeight="26.0" prefWidth="282.0" text="new name" />
-                              <TextField fx:id="updateActivityNameField" layoutX="10.0" layoutY="27.0" />
+                              <Label alignment="CENTER" layoutX="10.0" layoutY="77.0" prefHeight="26.0" prefWidth="282.0" />
+                              <TextField fx:id="updateActivityNameField" layoutX="10.0" layoutY="27.0" promptText="new name" />
                               <Button fx:id="buttonUpdateActivity" alignment="CENTER" layoutX="10.0" layoutY="52.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonUpdateActivityHandler" text="update" textAlignment="CENTER" />
                               <Pane layoutX="10.0" layoutY="122.0" prefHeight="42.0" prefWidth="282.0" />
                               <Button fx:id="buttonDeleteActivity" alignment="CENTER" layoutX="10.0" layoutY="226.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonDeleteActivityHandler" text="delete" textAlignment="CENTER" />
@@ -77,6 +77,72 @@
                         <TableView fx:id="activityTableView" prefHeight="440.0" prefWidth="788.0">
                            <columns>
                               <TableColumn fx:id="activityNameColumn" prefWidth="199.0" text="Name" />
+                           </columns>
+                        </TableView>
+                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="440.0" prefWidth="306.0" />
+                     </children>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </HBox>
+               </content>
+            </Tab>
+            <Tab text="teachers">
+               <content>
+                  <HBox prefHeight="461.0" prefWidth="628.0" spacing="20.0">
+                     <children>
+                        <Pane prefHeight="440.0" prefWidth="140.0" />
+                        <VBox prefHeight="440.0" prefWidth="246.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Pane layoutX="10.0" layoutY="35.0" prefHeight="42.0" prefWidth="282.0" />
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="336.0" />
+                              <TextField fx:id="teacherNameTextField" promptText="teacher name" />
+                              <Button fx:id="buttonAddTeacher" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonAddTeacherHandler" text="add" textAlignment="CENTER" />
+                              <Pane layoutX="10.0" layoutY="35.0" prefHeight="20.0" prefWidth="169.0" />
+                              <Label alignment="CENTER" layoutX="10.0" layoutY="77.0" prefHeight="26.0" prefWidth="282.0" />
+                              <TextField fx:id="updateTeacherNameField" layoutX="10.0" layoutY="27.0" promptText="new name" />
+                              <Button fx:id="buttonUpdateTeacher" alignment="CENTER" layoutX="10.0" layoutY="52.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonUpdateTeacherHandler" text="update" textAlignment="CENTER" />
+                              <Pane layoutX="10.0" layoutY="122.0" prefHeight="42.0" prefWidth="282.0" />
+                              <Button fx:id="buttonDeleteTeacher" alignment="CENTER" layoutX="10.0" layoutY="226.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonDeleteTeacherHandler" text="delete" textAlignment="CENTER" />
+                           </children>
+                        </VBox>
+                        <Pane prefHeight="440.0" prefWidth="140.0" />
+                        <TableView fx:id="teacherTableView" prefHeight="440.0" prefWidth="788.0">
+                           <columns>
+                              <TableColumn fx:id="teacherNameColumn" prefWidth="199.0" text="Name" />
+                           </columns>
+                        </TableView>
+                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="440.0" prefWidth="306.0" />
+                     </children>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </HBox>
+               </content>
+            </Tab>
+            <Tab text="formations">
+               <content>
+                  <HBox prefHeight="461.0" prefWidth="628.0" spacing="20.0">
+                     <children>
+                        <Pane prefHeight="440.0" prefWidth="140.0" />
+                        <VBox prefHeight="440.0" prefWidth="246.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Pane layoutX="10.0" layoutY="35.0" prefHeight="42.0" prefWidth="282.0" />
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="336.0" />
+                              <TextField fx:id="formationNameTextField" promptText="formation name" />
+                              <Button fx:id="buttonAddFormation" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonAddFormationHandler" text="add" textAlignment="CENTER" />
+                              <Pane layoutX="10.0" layoutY="35.0" prefHeight="20.0" prefWidth="169.0" />
+                              <Label alignment="CENTER" layoutX="10.0" layoutY="77.0" prefHeight="26.0" prefWidth="282.0" />
+                              <TextField fx:id="updateFormationNameField" layoutX="10.0" layoutY="27.0" promptText="new name" />
+                              <Button fx:id="buttonUpdateFormation" alignment="CENTER" layoutX="10.0" layoutY="52.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonUpdateFormationHandler" text="update" textAlignment="CENTER" />
+                              <Pane layoutX="10.0" layoutY="122.0" prefHeight="42.0" prefWidth="282.0" />
+                              <Button fx:id="buttonDeleteFormation" alignment="CENTER" layoutX="10.0" layoutY="226.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonDeleteFormationHandler" text="delete" textAlignment="CENTER" />
+                           </children>
+                        </VBox>
+                        <Pane prefHeight="440.0" prefWidth="140.0" />
+                        <TableView fx:id="formationTableView" prefHeight="440.0" prefWidth="788.0">
+                           <columns>
+                              <TableColumn fx:id="formationNameColumn" prefWidth="199.0" text="Name" />
                            </columns>
                         </TableView>
                         <Pane layoutX="10.0" layoutY="10.0" prefHeight="440.0" prefWidth="306.0" />
@@ -97,22 +163,22 @@
                               <VBox prefHeight="467.0" prefWidth="241.0" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Pane prefHeight="31.0" prefWidth="203.0" />
-                                    <Label prefHeight="18.0" prefWidth="250.0" text="activity name" />
-                                    <TextField fx:id="activityNameRel" />
+                                    <Label prefHeight="18.0" prefWidth="250.0" />
+                                    <TextField fx:id="activityNameRel" promptText="activity name" />
                                     <Pane layoutX="10.0" layoutY="10.0" prefHeight="24.0" prefWidth="203.0" />
-                                    <Label layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="223.0" text="room name" />
-                                    <TextField fx:id="roomNameRel" />
+                                    <Label layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="223.0" />
+                                    <TextField fx:id="roomNameRel" promptText="room name" />
                                     <Pane prefHeight="23.0" prefWidth="203.0" />
-                                    <Label prefHeight="17.0" prefWidth="94.0" text="teacher name" />
-                                    <TextField fx:id="teacherNameRel" />
+                                    <Label prefHeight="17.0" prefWidth="94.0" />
+                                    <TextField fx:id="teacherNameRel" promptText="teacher name" />
                                     <Pane prefHeight="38.0" prefWidth="203.0" />
                                     <Button fx:id="buttonAddRelation" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonAddRelationHandler" prefHeight="32.0" prefWidth="110.0" text="Add" textAlignment="CENTER" />
                                     <Pane layoutX="10.0" layoutY="208.0" prefHeight="58.0" prefWidth="203.0" />
-                                    <Label layoutX="10.0" layoutY="178.0" prefHeight="17.0" prefWidth="94.0" text="formation" />
-                                    <TextField fx:id="formationNameRel" onKeyTyped="#formationChangeHandler" />
+                                    <Label layoutX="10.0" layoutY="178.0" prefHeight="17.0" prefWidth="94.0" />
+                                    <TextField fx:id="formationNameRel" onKeyTyped="#formationChangeHandler" promptText="formation" />
                                  </children>
                               </VBox>
-                              <TableView fx:id="timetableRelationTableView" onDragEntered="#handleSourceDragging" prefHeight="467.0" prefWidth="352.0">
+                              <TableView fx:id="timetableRelationTableView" onDragDetected="#handleDragDetected" prefHeight="467.0" prefWidth="352.0">
                                  <columns>
                                     <TableColumn fx:id="activityNameRelColumn" prefWidth="59.0" text="activity" />
                                     <TableColumn fx:id="roomNameRelColumn" prefWidth="76.0" text="room" />
@@ -120,7 +186,7 @@
                                     <TableColumn fx:id="formationNameRelColumn" prefWidth="97.0" text="formation" />
                                  </columns>
                               </TableView>
-                              <GridPane fx:id="timetableGrid" onDragOver="#handleTargetDragging" prefHeight="467.0" prefWidth="743.0">
+                              <GridPane fx:id="timetableGrid" onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="467.0" prefWidth="743.0">
                                 <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.0" minWidth="10.0" prefWidth="58.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="98.0" minWidth="0.0" prefWidth="77.0" />
@@ -148,6 +214,31 @@
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="12 to 14" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="14 to 16" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="16 to 18" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                                    <Pane onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
                                  </children>
                               </GridPane>
                            </children>

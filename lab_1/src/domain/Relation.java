@@ -22,7 +22,7 @@ public class Relation extends MyBaseObject implements Serializable {
 
     @Override
     public String toString() {
-        return this.activityName + "\t" + this.roomName + "\t" + this.teacherName + "\t" + this.formationName  + "\t" + this.dateString;
+        return this.activityName + "\n" + this.roomName + "\n" + this.teacherName + "\n" + this.formationName  + "\n" + this.dateString;
     }
 
     public String getActivityName() {
